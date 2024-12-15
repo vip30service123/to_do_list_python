@@ -1,3 +1,6 @@
+Act as a Python Developer. You are given some functions and a requirement. Your task is to code based on these functions and the requirement.
+
+### Functions
 from psycopg2 import Error
 from datetime import datetime
 from typing import List, Dict, Any, Optional
@@ -6,7 +9,7 @@ def create_todo(
     connection: Any,
     username: str,
     content: str
-) -> List[Dict[str, Any]]:
+) -> bool:
     """
     Create a new todo item in the TODO_LIST table.
     
@@ -26,11 +29,11 @@ def create_todo(
         """
         cursor.execute(insert_query, (username, content, datetime.now()))
         cursor.close()
-        return read_todos(connection, username)
+        return True
     
     except (Exception, Error) as error:
         print(f"Error while creating todo: {error}")
-        return []
+        return False
 
 def read_todos(
     connection: Any,
@@ -112,8 +115,7 @@ def update_todo(
 
 def delete_todo(
     connection: Any,
-    username: str,
-    content: str
+    username: str
 ) -> List[Dict[str, Any]]:
     """
     Delete a todo item from the TODO_LIST table.
@@ -129,14 +131,23 @@ def delete_todo(
         cursor = connection.cursor()
         delete_query = """
             DELETE FROM TODO_LIST
-            WHERE USERNAME = %s AND CONTENT = %s
+            WHERE USER_ID = %s
         """
-        cursor.execute(delete_query, (username, content))
+        cursor.execute(delete_query, (username,))
         cursor.close()
         
         # Return updated list of todos
-        return read_todos(connection, username)
+        return read_todos(connection)
     
     except (Exception, Error) as error:
         print(f"Error while deleting todo: {error}")
         return []
+
+### Requirement
+Write an fastapi that contains 4 functions:
+- Create to-do item: Create a todo item using function create_todo. 
+- Read to-do items: Return a list of todo item using function read_todos. 
+- Update to-do item: Update a todo item using function update_todo.
+- Delete to-do item: Delete a todo item using function delete_todo.
+The code must use APIRouter from fastapi, tags = ['todo_list'].
+Return suitable code for each function.

@@ -1,3 +1,6 @@
+Act as a Python Developer. You are given some functions and a requirement. Your task is to code based on these functions and the requirement.
+
+### Functions
 from psycopg2 import Error
 from datetime import datetime
 from typing import List, Dict, Optional, Any
@@ -64,3 +67,10 @@ def read_users(connection: Any) -> List[Dict[str, Any]]:
     except (Exception, Error) as error:
         print(f"Error while reading users: {error}")
         return []
+
+
+### Requirement
+Write an fastapi file that has 2 functions:
+- Sign up: Use function read_users to check if the user is already created. If not, create a user using create_user and return suitablt status code. The attributes should contain username, password, and password_again.
+- Log in: Use function read_users to check if the user is already created. Return suitatble status code.
+The code must use APIRouter from fastapi, tags = ['authentication']
