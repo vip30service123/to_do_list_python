@@ -1,0 +1,20 @@
+Act as a data engineer. You are given description of some tables. Your task is to create a sql file that create these table.
+
+Notes:
+- Your code must be as simple as possible.
+- You only write code in one file only.
+- The sql file must be written in postgres syntax.
+
+### Table Description
+1. USER:
+- ID: unique, primary key, not null.
+- USERNAME: string.
+- PASSWORD: string.
+- CREATED_TIME: date, time.
+
+2. TODO_LIST:
+- USER_ID: foreign key from USER table, unique, not null.
+- CONTENT: string.
+- CREATED_TIME: date, time.
+
+### SQL File
